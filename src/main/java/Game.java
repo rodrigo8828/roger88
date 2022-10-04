@@ -11,11 +11,12 @@ import java.io.IOException;
 
 public class Game {
     private TerminalScreen screen;
-    private int x = 10;
-    private int y = 10;
+    private Hero hero;
+
 
     public Game(int alt,int larg) {
         try {
+            hero = new Hero(10, 10);
             TerminalSize terminalSize = new TerminalSize(alt, larg);
             DefaultTerminalFactory terminalFactory = new
                     DefaultTerminalFactory()
@@ -32,39 +33,38 @@ public class Game {
     }
         private void draw() throws IOException {
             screen.clear();
-            screen.setCharacter(x, y, TextCharacter.fromCharacter('X')[0]);
+            hero.draw(screen);
             screen.refresh();
 
         }
         public void run() throws IOException {
             while (true){
                 draw();
-            KeyStroke key = screen.readInput();
-            if (key.getKeyType() == KeyType.Character && key.getCharacter()
-                    == 'q'){
-                screen.close();
-            }
-            if(key.getKeyType() == KeyType.EOF){
-                break;
-            }
-
+                KeyStroke key = screen.readInput();
+                if (key.getKeyType() == KeyType.Character && key.getCharacter() == 'q'){
+                    screen.close();
+                }
+                if(key.getKeyType() == KeyType.EOF){
+                    break;
+                }
                 processKey(key);
            }
         }
     private void processKey(KeyStroke key) {
         System.out.println(key);
         if (key.getKeyType() == KeyType.ArrowUp){
-            y=y-1;
+            hero.moveUp();
         }
         if (key.getKeyType() == KeyType.ArrowDown){
-            y =y+1;
+            hero.moveDown();
         }
         if(key.getKeyType() == KeyType.ArrowRight){
-            x=x+1;
+            hero.moveRight();
         }
         if(key.getKeyType() == KeyType.ArrowLeft){
-            x = x-1;
+            hero.moveLeft();
         }
+
     }
 
 
