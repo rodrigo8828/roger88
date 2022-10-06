@@ -28,6 +28,7 @@ public class Hero {
 
     public void setPosition(Position p){
         position = p;
+
     }
 
 
