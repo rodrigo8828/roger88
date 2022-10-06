@@ -16,7 +16,7 @@ public class Game {
 
     public Game(int alt,int larg) {
         try {
-            hero = new Hero(10, 10);
+            hero = new Hero(new Position(10, 10));
             TerminalSize terminalSize = new TerminalSize(alt, larg);
             DefaultTerminalFactory terminalFactory = new
                     DefaultTerminalFactory()
@@ -53,18 +53,22 @@ public class Game {
     private void processKey(KeyStroke key) {
         System.out.println(key);
         if (key.getKeyType() == KeyType.ArrowUp){
-            hero.moveUp();
+            moveHero(hero.moveUp());
         }
         if (key.getKeyType() == KeyType.ArrowDown){
-            hero.moveDown();
+            moveHero(hero.moveDown());
         }
         if(key.getKeyType() == KeyType.ArrowRight){
-            hero.moveRight();
+            moveHero(hero.moveRight());
         }
         if(key.getKeyType() == KeyType.ArrowLeft){
-            hero.moveLeft();
+            moveHero(hero.moveLeft());
         }
 
+    }
+
+    private void moveHero(Position position) {
+        hero.setPosition(position);
     }
 
 
